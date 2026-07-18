@@ -36,8 +36,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
     Jaga bahasa agar ramah dan menyemangati!`;
 
     try {
-        // Menggunakan model gemini-1.5-flash yang sangat stabil untuk web fetch
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKeyInput}`, {
+        // PERBAIKAN DI SINI: Mengubah 'v1beta' menjadi 'v1' agar sesuai dengan sistem terbaru Google
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${apiKeyInput}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -61,7 +61,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             // Format teks agar rapi saat tampil di HTML
             botDiv.innerHTML = reply.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
         } else if (data.error) {
-            // Jika Google memberikan pesan eror (misal API Key salah)
+            // Jika Google memberikan pesan eror
             botDiv.innerHTML = `<strong>Eror dari Sistem:</strong> ${data.error.message}`;
         } else {
             botDiv.textContent = 'Maaf, Kakak mengalami kendala format data. Coba ulangi lagi ya!';
