@@ -3,29 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kak Tutor - Pendamping Belajar Kelas 7</title>
+    <title>Kak Tutor - Pendamping Belajar Mandiri</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
             <h1>📘 Kak Tutor</h1>
-            <p>Teman setia belajar Mandiri Siswa Kelas 7 SMP</p>
+            <!-- TAGLINE BARU YANG SUDAH DISESUAIKAN -->
+            <p>Teman Setia Belajar Mandiri Siswa SMP & SMA (Kelas 7 - 12)</p>
         </header>
 
         <div class="api-section">
             <label for="apiKey">Masukkan API Key Gemini Anda:</label>
             <input type="password" id="apiKey" placeholder="Masukkan di sini...">
-            <p class="info-text">*API Key Anda aman, langsung diproses di browser tanpa disimpan di server manapun.</p>
             
-            <!-- PANDUAN CARA MEMBUAT API KEY GRATIS (SOPAN & RAPI) -->
+            <!-- PILIHAN TINGKAT KELAS LENGKAP SAMPAI KELAS 12 -->
+            <div style="margin-top: 10px; text-align: left;">
+                <label for="gradeSelect" style="font-weight: bold; display: block; margin-bottom: 5px;">Pilih Tingkat Kelas Anda:</label>
+                <select id="gradeSelect" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #ccc; font-size: 1em;">
+                    <option value="7 SMP">Kelas 7 SMP</option>
+                    <option value="8 SMP">Kelas 8 SMP</option>
+                    <option value="9 SMP">Kelas 9 SMP</option>
+                    <option value="10 SMA">Kelas 10 SMA</option>
+                    <option value="11 SMA">Kelas 11 SMA</option>
+                    <option value="12 SMA">Kelas 12 SMA</option>
+                </select>
+            </div>
+
+            <!-- PANDUAN CARA MEMBUAT API KEY GRATIS -->
             <div class="api-guide" style="margin-top: 15px; background-color: #f4f6f9; padding: 15px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 0.9em; text-align: left; color: #374151;">
-                <p style="margin-top: 0; font-weight: bold; color: #1e40af; display: flex; align-items: center; gap: 5px;">
+                <p style="margin-top: 0; font-weight: bold; color: #1e40af;">
                     💡 Belum memiliki API Key? Anda bisa mendapatkannya secara GRATIS:
                 </p>
                 <ol style="margin-bottom: 0; padding-left: 20px; line-height: 1.6;">
                     <li>Kunjungi situs resmi <a href="https://aistudio.google.com" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">Google AI Studio</a>.</li>
-                    <li>Silakan masuk (Login) menggunakan akun Google atau Gmail Anda.</li>
+                    <li>Masuk (Login) menggunakan akun Google atau Gmail Anda.</li>
                     <li>Klik menu <strong>Get API Key</strong>, lalu pilih tombol <strong>Create API Key</strong>.</li>
                     <li>Salin (Copy) kode panjang yang diberikan, kemudian tempelkan (Paste) ke dalam kotak input di atas.</li>
                 </ol>
@@ -34,7 +47,7 @@
 
         <div class="chat-box" id="chatBox">
             <div class="message bot-message">
-                Halo! Aku Kak Tutor. Pilih mata pelajaranmu atau langsung ketik soal yang membuatmu bingung di bawah ya! 😊
+                Halo! Aku Kak Tutor. Silakan pilih kelasmu di atas, lalu ketik soal atau materi sekolah yang ingin kita bahas bersama ya! 😊
             </div>
         </div>
 
@@ -48,6 +61,7 @@
     document.getElementById('sendBtn').addEventListener('click', async () => {
         const apiKeyInput = document.getElementById('apiKey').value.trim();
         const userInputInput = document.getElementById('userInput').value.trim();
+        const gradeInput = document.getElementById('gradeSelect').value; 
         const chatBox = document.getElementById('chatBox');
 
         if (!apiKeyInput) {
@@ -68,17 +82,18 @@
         // 2. Tampilkan Loading
         const loadingDiv = document.createElement('div');
         loadingDiv.className = 'message bot-message';
-        loadingDiv.textContent = 'Kak Tutor sedang membuka buku paket... ⚡';
+        loadingDiv.textContent = `Kak Tutor sedang membuka buku paket ${gradeInput}... ⚡`;
         chatBox.appendChild(loadingDiv);
         chatBox.scrollTop = chatBox.scrollHeight;
 
-        const systemInstruction = `Anda adalah "Kak Tutor", asisten belajar virtual untuk anak SMP kelas 7 di Indonesia. Tugas Anda membantu menjawab seluruh mapel kelas 7 (Matematika, IPA, IPS, Bahasa, dll) sesuai Kurikulum Merdeka. 
+        // Instruksi otomatis menyesuaikan tingkat kesulitan dari kelas 7 sampai 12
+        const systemInstruction = `Anda adalah "Kak Tutor", asisten belajar virtual untuk anak sekolah tingkat ${gradeInput} di Indonesia. Tugas Anda membantu menjawab seluruh mapel kelas ${gradeInput} sesuai Kurikulum Merdeka yang berlaku.
         WAJIB JAWAB DENGAN STRUKTUR BERIKUT:
-        1. Sebutkan Mata Pelajaran & Bab Buku terkait.
-        2. Berikan konsep atau rumus dasarnya dengan bahasa anak SMP.
-        3. Berikan langkah pengerjaan/proses logikanya.
+        1. Sebutkan Mata Pelajaran & Bab Buku terkait tingkat ${gradeInput}.
+        2. Berikan konsep atau rumus dasarnya dengan bahasa anak sekolah tingkat ${gradeInput} yang mudah dipahami namun tetap akurat.
+        3. Berikan langkah pengerjaan/proses logikanya secara berurutan.
         4. Di bagian paling bawah, berikan "Jawaban Akhir" dengan jelas dan dicetak tebal agar siswa bisa mencocokkan hasil kerjanya.
-        Jaga bahasa agar ramah dan menyemangati!`;
+        Jaga bahasa agar ramah, sopan, dan menyemangati!`;
 
         const chosenModel = "models/gemini-3.5-flash"; 
 
