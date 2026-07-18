@@ -14,9 +14,22 @@
         </header>
 
         <div class="api-section">
-            <label for="apiKey">Masukkan API Key Gemini Kamu:</label>
+            <label for="apiKey">Masukkan API Key Gemini Anda:</label>
             <input type="password" id="apiKey" placeholder="Masukkan di sini...">
-            <p class="info-text">*API Key aman, langsung diproses di browsermu tanpa disimpan di server manapun.</p>
+            <p class="info-text">*API Key Anda aman, langsung diproses di browser tanpa disimpan di server manapun.</p>
+            
+            <!-- PANDUAN CARA MEMBUAT API KEY GRATIS (SOPAN & RAPI) -->
+            <div class="api-guide" style="margin-top: 15px; background-color: #f4f6f9; padding: 15px; border-radius: 8px; border: 1px solid #d1d5db; font-size: 0.9em; text-align: left; color: #374151;">
+                <p style="margin-top: 0; font-weight: bold; color: #1e40af; display: flex; align-items: center; gap: 5px;">
+                    💡 Belum memiliki API Key? Anda bisa mendapatkannya secara GRATIS:
+                </p>
+                <ol style="margin-bottom: 0; padding-left: 20px; line-height: 1.6;">
+                    <li>Kunjungi situs resmi <a href="https://aistudio.google.com" target="_blank" style="color: #2563eb; font-weight: bold; text-decoration: underline;">Google AI Studio</a>.</li>
+                    <li>Silakan masuk (Login) menggunakan akun Google atau Gmail Anda.</li>
+                    <li>Klik menu <strong>Get API Key</strong>, lalu pilih tombol <strong>Create API Key</strong>.</li>
+                    <li>Salin (Copy) kode panjang yang diberikan, kemudian tempelkan (Paste) ke dalam kotak input di atas.</li>
+                </ol>
+            </div>
         </div>
 
         <div class="chat-box" id="chatBox">
@@ -67,11 +80,9 @@
         4. Di bagian paling bawah, berikan "Jawaban Akhir" dengan jelas dan dicetak tebal agar siswa bisa mencocokkan hasil kerjanya.
         Jaga bahasa agar ramah dan menyemangati!`;
 
-        // KUNCI UTAMA: Menggunakan model Gemini 3.5 Flash terbaru yang aktif di akunmu
         const chosenModel = "models/gemini-3.5-flash"; 
 
         try {
-            // Kirim pertanyaan langsung ke Google Gemini 3.5
             const response = await fetch(`https://generativelanguage.googleapis.com/v1/${chosenModel}:generateContent?key=${apiKeyInput}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
